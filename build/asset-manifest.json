@@ -1,0 +1,11 @@
+{
+  "files": {
+    "main.js": "/static/js/main.fb464dd6.js",
+    "static/media/tech-bg.svg": "/static/media/tech-bg.3b165802e14184d24c75ed3c67066ce6.svg",
+    "index.html": "/index.html",
+    "main.fb464dd6.js.map": "/static/js/main.fb464dd6.js.map"
+  },
+  "entrypoints": [
+    "static/js/main.fb464dd6.js"
+  ]
+}
