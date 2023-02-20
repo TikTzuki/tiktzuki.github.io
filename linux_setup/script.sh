@@ -26,7 +26,6 @@ snap(){
     apt install snapd
     systemctl enable snapd
     systemctl start snapd
-    
     snap install intellij-idea-ultimate --classic
     snap install telegram-desktop
     snap install skype
@@ -41,12 +40,11 @@ deb(){
 }
 
 nvim(){
-    wget https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage
-    sudo mv nvim.appimage /usr/local/nvim
-    chmod +x /usr/local/bin/nvim
-    export CUSTOM_NVIM_PATH=/usr/local/bin/nvim
-    sudo update-alternatives --install /usr/bin/nvim nvim "${CUSTOM_NVIM_PATH}" 110
-    git clone https://github.com/TikTzuki/nvim.git ~/.config/nvim
+    wget https://github.com/neovim/neovim/releases/download/nightly/nvim-linux64.deb
+    dpkg -i *.deb
+    pip3 install pynvim
+    npm i -g neovim
+    apt install python3-pip fzf ranger ripgrep silversearcher-ag fd-find xsel -y
 }
 
 ibus(){
@@ -56,7 +54,13 @@ ibus(){
 clean
 
 if [[ "$1" == "" ]]; then
-    echo "run all"
+    jvm
+    node
+    go
+    snap
+    deb
+    nvim
+    ibus
 else
     $1
 fi
