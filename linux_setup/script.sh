@@ -47,6 +47,21 @@ nvim(){
     apt install python3-pip fzf ranger ripgrep silversearcher-ag fd-find xsel -y
 }
 
+docker(){
+  apt-get remove docker docker-engine docker.io containerd runc
+  apt-get update
+  apt-get install \
+      ca-certificates \
+      curl \
+      gnupg \
+      lsb-release
+  mkdir -m 0755 -p /etc/apt/keyrings
+  curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/docker-ce-archive-keyring.gpg
+  printf '%s\n' "deb https://download.docker.com/linux/debian bullseye stable" | sudo tee /etc/apt/sources.list.d/docker-ce.list
+  apt-get update
+  apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
+}
+
 ibus(){
     echo "hello ibus"
 }
@@ -59,6 +74,7 @@ if [[ "$1" == "" ]]; then
     go
     snap
     deb
+    docker
     nvim
     ibus
 else
