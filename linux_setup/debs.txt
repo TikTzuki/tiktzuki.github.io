@@ -4,3 +4,4 @@ https://download.redisinsight.redis.com/latest/RedisInsight-v2-linux-amd64.deb
 https://downloads.mongodb.com/compass/mongodb-compass_1.35.0_amd64.deb
 https://dl.discordapp.net/apps/linux/0.0.25/discord-0.0.25.deb
 https://wdl1.pcfg.cache.wpscdn.com/wpsdl/wpsoffice/download/linux/11691/wps-office_11.1.0.11691.XA_amd64.deb
+https://dl3.xmind.net/Xmind-for-Linux-amd64bit-22.11.3656.deb
