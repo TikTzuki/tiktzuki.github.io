@@ -38,6 +38,9 @@ deb(){
     done < debs.txt
     dpkg -i *.deb
 }
+deb_online(){
+    apt-get install postgresql-client
+}
 
 nvim(){
     wget https://github.com/neovim/neovim/releases/download/nightly/nvim-linux64.deb
