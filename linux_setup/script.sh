@@ -65,6 +65,39 @@ docker(){
   apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
 }
 
+install_java(){
+    curl -s "https://get.sdkman.io" | bash
+    source "$HOME/.sdkman/bin/sdkman-init.sh"
+    sdk version
+    sdk install java 8.0.442-amzn -y
+    sdk install java 11.0.26-amzn -y
+    sdk install java 23.0.2-amzn -y
+    sdk default java 23.0.2-amzn
+}
+
+install_docker(){
+  sudo apt-get update
+  sudo apt install -y docker.io docker-compose
+  sudo systemctl enable docker --now
+  docker
+  sudo usermod -aG docker $USER
+  sudo chmod 777 /var/run/docker.sock
+}
+
+install_node(){
+  wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
+#  nvm install v22.13.1
+}
+
+install_apt(){
+  sudo apt-get install neovim
+}
+
+install_snap(){
+  snap install kubectl --classic
+  snap install telegram-desktop
+}
+
 ibus(){
     echo "hello ibus"
 }
