@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunktik_wiki=self.webpackChunktik_wiki||[]).push([[4504],{4504:(e,i,k)=>{k.d(i,{createTreemapServices:()=>s.d});var s=k(3758);k(8198)}}]);
