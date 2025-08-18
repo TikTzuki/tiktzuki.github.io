@@ -6,7 +6,7 @@ import type * as Preset from '@docusaurus/preset-classic';
 
 const config: Config = {
     title: "Tiktuzki's wiki",
-    tagline: 'Dinosaurs are cool',
+    tagline: 'Stare at the abyss long enough, and it starts to stare back at you...',
     favicon: 'img/favicon.ico',
     themes: ['@docusaurus/theme-mermaid'],
     // In order for Mermaid code blocks in Markdown to work,
