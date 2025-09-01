@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunktik_wiki=self.webpackChunktik_wiki||[]).push([[2498],{2498:(e,i,k)=>{k.d(i,{createArchitectureServices:()=>c.S});var c=k(3009);k(8198)}}]);
