@@ -1,6 +1,8 @@
 import {themes as prismThemes} from 'prism-react-renderer';
 import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
+import remarkMath from 'remark-math';
+import rehypeKatex from 'rehype-katex';
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
@@ -14,7 +16,7 @@ const config: Config = {
     markdown: {
         mermaid: true,
     },
-    plugins: [],
+    plugins: ['docusaurus-plugin-sass'],
     // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
     future: {
         v4: true, // Improve compatibility with the upcoming Docusaurus v4
@@ -52,6 +54,8 @@ const config: Config = {
                     // Remove this to remove the "edit this page" links.
                     editUrl:
                         'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
+                    remarkPlugins: [remarkMath],
+                    rehypePlugins: [rehypeKatex],
                 },
                 blog: {
                     showReadingTime: true,
@@ -69,12 +73,20 @@ const config: Config = {
                     onUntruncatedBlogPosts: 'warn',
                 },
                 theme: {
-                    customCss: './src/css/custom.css',
+                    customCss: './src/css/custom.scss',
                 },
             } satisfies Preset.Options,
         ],
     ],
-
+    stylesheets: [
+        {
+            href: 'https://cdn.jsdelivr.net/npm/katex@0.13.24/dist/katex.min.css',
+            type: 'text/css',
+            integrity:
+                'sha384-odtC+0UGzzFL/6PNoE8rX/SPcQDXBJ+uRepguP4QkPCm2LBxH3FA3y+fKSiJ+AmM',
+            crossorigin: 'anonymous',
+        },
+    ],
     themeConfig: {
         // Replace with your project's social card
         image: 'img/docusaurus-social-card.jpg',
@@ -87,9 +99,9 @@ const config: Config = {
             items: [
                 {
                     type: 'docSidebar',
-                    sidebarId: 'tutorialSidebar',
+                    sidebarId: 'docSidebar',
                     position: 'left',
-                    label: 'Tutorial',
+                    label: 'Docs',
                 },
                 {to: '/blog', label: 'Blog', position: 'left'},
                 {
@@ -106,7 +118,7 @@ const config: Config = {
                     title: 'Docs',
                     items: [
                         {
-                            label: 'Tutorial',
+                            label: 'Docs',
                             to: '/docs/intro',
                         },
                     ],
@@ -122,10 +134,6 @@ const config: Config = {
                             label: 'Discord',
                             href: 'https://discordapp.com/invite/docusaurus',
                         },
-                        {
-                            label: 'X',
-                            href: 'https://x.com/docusaurus',
-                        },
                     ],
                 },
                 {
@@ -137,12 +145,12 @@ const config: Config = {
                         },
                         {
                             label: 'GitHub',
-                            href: 'https://github.com/facebook/docusaurus',
+                            href: 'https://github.com/TikTzuki',
                         },
                     ],
                 },
             ],
-            copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+            copyright: `Copyright © ${new Date().getFullYear()} TikTuzki, Inc. Built with Docusaurus.`,
         },
         prism: {
             theme: prismThemes.github,
