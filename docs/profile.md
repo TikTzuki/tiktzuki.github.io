@@ -1,4 +1,5 @@
-# TikTuzki [![TikTuzki](./img/tik-badge.svg)](https://github.com/TikTzuki/TikTzuki)
+# (Deprecate) Profile
+## TikTuzki [![TikTuzki](./img/tik-badge.svg)](https://github.com/TikTzuki/TikTzuki)
 
 [<img alt="styled-components" src="./img/gear.png" height="50px" align="right"/>](https://styled-components.com)
 

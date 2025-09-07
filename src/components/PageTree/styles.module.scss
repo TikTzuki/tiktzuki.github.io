@@ -1,0 +1,74 @@
+.pageTree {
+  background: var(--ifm-card-background-color);
+  border-radius: 8px;
+  padding: 2rem;
+  margin: 2rem 0;
+  box-shadow: var(--ifm-global-shadow-lw);
+}
+
+.title {
+  margin-bottom: 1.5rem;
+  color: var(--ifm-heading-color);
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+.tree {
+  max-width: 100%;
+}
+
+.treeNode {
+  margin: 0.5rem 0;
+}
+
+.nodeContent {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.nodeContent:hover {
+  background-color: var(--ifm-hover-overlay);
+}
+
+.nodeIcon {
+  margin-right: 0.5rem;
+  font-size: 1rem;
+  min-width: 20px;
+}
+
+.nodeLink {
+  color: var(--ifm-font-color-base);
+  text-decoration: none;
+  font-weight: 500;
+  flex: 1;
+}
+
+.nodeLink:hover {
+  color: var(--ifm-color-primary);
+  text-decoration: none;
+}
+
+.children {
+  border-left: 2px solid var(--ifm-color-emphasis-300);
+  margin-left: 10px;
+  padding-left: 10px;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .pageTree {
+    padding: 1rem;
+  }
+
+  .treeNode {
+    margin-left: 0 !important;
+  }
+
+  .children {
+    margin-left: 5px;
+    padding-left: 5px;
+  }
+}
