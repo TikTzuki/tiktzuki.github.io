@@ -29,7 +29,7 @@ In mod 7:
 
 An elliptic curve is defined by an equation like:
 
-Demo: [Elliptic Curves](/demo/elliptic-demo)
+Demo: [Elliptic Curves](/cryptography/elliptic-demo)
 
 ```
 y² = x³ + ax + b (mod p)
