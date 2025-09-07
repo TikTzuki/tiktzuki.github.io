@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunktik_wiki=self.webpackChunktik_wiki||[]).push([[5392],{5392:(e,i,k)=>{k.d(i,{createGitGraphServices:()=>s.b});var s=k(4087);k(8198)}}]);

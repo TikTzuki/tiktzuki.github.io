@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunktik_wiki=self.webpackChunktik_wiki||[]).push([[3956],{3956:(e,i,k)=>{k.d(i,{createRadarServices:()=>a.f});var a=k(2852);k(8198)}}]);
