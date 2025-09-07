@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunktik_wiki=self.webpackChunktik_wiki||[]).push([[8188],{8188:(e,i,k)=>{k.d(i,{createPieServices:()=>s.f});var s=k(9786);k(8198)}}]);
