@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="en" dir="ltr" class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-system-design/high-performance-websocket-broker" data-has-hydrated="false">
+<head>
+<meta charset="UTF-8">
+<meta name="generator" content="Docusaurus v3.9.2">
+<title data-rh="true">High Performance Websocket broker | Tiktuzki&#x27;s space</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:image" content="https://tiktzuki.github.io/img/docusaurus-social-card.jpg"><meta data-rh="true" name="twitter:image" content="https://tiktzuki.github.io/img/docusaurus-social-card.jpg"><meta data-rh="true" property="og:url" content="https://tiktzuki.github.io/docs/system-design/high-performance-websocket-broker"><meta data-rh="true" property="og:locale" content="en"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="High Performance Websocket broker | Tiktuzki&#x27;s space"><meta data-rh="true" name="description" content="High-performance WebSocket service for streaming events to end users in a Centralized Exchange (CEX) system, robust, scalable, and low-latency architecture."><meta data-rh="true" property="og:description" content="High-performance WebSocket service for streaming events to end users in a Centralized Exchange (CEX) system, robust, scalable, and low-latency architecture."><link data-rh="true" rel="icon" href="/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://tiktzuki.github.io/docs/system-design/high-performance-websocket-broker"><link data-rh="true" rel="alternate" href="https://tiktzuki.github.io/docs/system-design/high-performance-websocket-broker" hreflang="en"><link data-rh="true" rel="alternate" href="https://tiktzuki.github.io/docs/system-design/high-performance-websocket-broker" hreflang="x-default"><script data-rh="true" type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"High Performance Websocket broker","item":"https://tiktzuki.github.io/docs/system-design/high-performance-websocket-broker"}]}</script><link rel="alternate" type="application/rss+xml" href="/blog/rss.xml" title="Tiktuzki&#39;s space RSS Feed">
+<link rel="alternate" type="application/atom+xml" href="/blog/atom.xml" title="Tiktuzki&#39;s space Atom Feed">
+
+
+
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.24/dist/katex.min.css" integrity="sha384-odtC+0UGzzFL/6PNoE8rX/SPcQDXBJ+uRepguP4QkPCm2LBxH3FA3y+fKSiJ+AmM" crossorigin="anonymous"><link rel="stylesheet" href="/assets/css/styles.21f4dd36.css">
+<script src="/assets/js/runtime~main.dc9f6578.js" defer="defer"></script>
+<script src="/assets/js/main.d6a14e6d.js" defer="defer"></script>
+</head>
+<body class="navigation-with-keyboard">
+<svg style="display: none;"><defs>
+<symbol id="theme-svg-external-link" viewBox="0 0 24 24"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
+</defs></svg>
+<script>!function(){var t=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme")}catch(t){}}();document.documentElement.setAttribute("data-theme",t||"dark"),document.documentElement.setAttribute("data-theme-choice",t||"dark")}(),function(){try{const c=new URLSearchParams(window.location.search).entries();for(var[t,e]of c)if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id="__docusaurus"><link rel="preload" as="image" href="/img/favicon.ico"><div role="region" aria-label="Skip to main content"><a class="skipToContent_fXgn" href="#__docusaurus_skipToContent_fallback">Skip to main content</a></div><nav aria-label="Main" class="theme-layout-navbar navbar navbar--fixed-top"><div class="navbar__inner"><div class="theme-layout-navbar-left navbar__items"><button aria-label="Toggle navigation bar" aria-expanded="false" class="navbar__toggle clean-btn" type="button"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg></button><a class="navbar__brand" href="/"><div class="navbar__logo"><img src="/img/favicon.ico" alt="My Site Logo" class="themedComponent_mlkZ themedComponent--light_NVdE"><img src="/img/favicon.ico" alt="My Site Logo" class="themedComponent_mlkZ themedComponent--dark_xIcU"></div><b class="navbar__title text--truncate">Tiktuzki&#x27;s space</b></a><a aria-current="page" class="navbar__item navbar__link navbar__link--active" href="/docs/category/cryptography">Docs</a><a class="navbar__item navbar__link" href="/blog">Blog</a></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><a href="https://github.com/TikTzuki" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type="button" disabled="" title="system mode" aria-label="Switch between dark and light mode (currently system mode)"><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP lightToggleIcon_pyhR"><path fill="currentColor" d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP darkToggleIcon_wfgR"><path fill="currentColor" d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP systemToggleIcon_QzmC"><path fill="currentColor" d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"></path></svg></button></div><div class="navbarSearchContainer_Bca1"></div></div></div><div role="presentation" class="navbar-sidebar__backdrop"></div></nav><div id="__docusaurus_skipToContent_fallback" class="theme-layout-main main-wrapper mainWrapper_z2l0"><div class="docsWrapper_hBAB"><button aria-label="Scroll back to top" class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type="button"></button><div class="docRoot_UBD9"><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class="sidebarViewport_aRkj"><div class="sidebar_njMd"><nav aria-label="Docs sidebar" class="menu thin-scrollbar menu_SIkG"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist" href="/docs/category/cryptography"><span title="Cryptography" class="categoryLinkLabel_W154">Cryptography</span></a><button aria-label="Expand sidebar category &#x27;Cryptography&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist" href="/docs/category/microservices"><span title="Microservices" class="categoryLinkLabel_W154">Microservices</span></a><button aria-label="Expand sidebar category &#x27;Microservices&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist" href="/docs/category/trading-101"><span title="Trading 101" class="categoryLinkLabel_W154">Trading 101</span></a><button aria-label="Expand sidebar category &#x27;Trading 101&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist" href="/docs/category/useful-references"><span title="Useful References" class="categoryLinkLabel_W154">Useful References</span></a><button aria-label="Expand sidebar category &#x27;Useful References&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist" href="/docs/category/archive"><span title="Archive" class="categoryLinkLabel_W154">Archive</span></a><button aria-label="Expand sidebar category &#x27;Archive&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" href="/docs/dev-cluster/available-dev-service"><span title="dev-cluster" class="categoryLinkLabel_W154">dev-cluster</span></a></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" href="/docs/interview-question-bank/redis-caching-strategy"><span title="interview-question-bank" class="categoryLinkLabel_W154">interview-question-bank</span></a></div></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/docs/intro"><span title="Introduction" class="linkLabel_WmDU">Introduction</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/docs/mcp-atlassian-integration"><span title="MCP-Atlassian Integration Guide" class="linkLabel_WmDU">MCP-Atlassian Integration Guide</span></a></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" href="/docs/rust-libp2p/network"><span title="rust-libp2p" class="categoryLinkLabel_W154">rust-libp2p</span></a></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret menu__link--active" role="button" aria-expanded="true" href="/docs/system-design/high-performance-websocket-broker"><span title="system-design" class="categoryLinkLabel_W154">system-design</span></a></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current="page" tabindex="0" href="/docs/system-design/high-performance-websocket-broker"><span title="High Performance Websocket broker" class="linkLabel_WmDU">High Performance Websocket broker</span></a></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" tabindex="0" href="/docs/system-design/mpc/MPC-Rust"><span title="mpc" class="categoryLinkLabel_W154">mpc</span></a></div></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/docs/system-design/sdd-template"><span title="System Design Document (SDD) Template" class="linkLabel_WmDU">System Design Document (SDD) Template</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/docs/system-design/websocket-gateway-api-design"><span title="Websocket Gateway API Design" class="linkLabel_WmDU">Websocket Gateway API Design</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/docs/system-design/websocket-gateway-cluster"><span title="Websocket Gateway Cluster SDD" class="linkLabel_WmDU">Websocket Gateway Cluster SDD</span></a></li></ul></li></ul></nav></div></div></aside><main class="docMainContainer_TBSr"><div class="container padding-top--md padding-bottom--lg"><div class="row"><div class="col docItemCol_VOVn"><div class="docItemContainer_Djhp"><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label="Breadcrumbs"><ul class="breadcrumbs"><li class="breadcrumbs__item"><a aria-label="Home page" class="breadcrumbs__link" href="/"><svg viewBox="0 0 24 24" class="breadcrumbHomeIcon_YNFT"><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill="currentColor"></path></svg></a></li><li class="breadcrumbs__item"><span class="breadcrumbs__link">system-design</span></li><li class="breadcrumbs__item breadcrumbs__item--active"><span class="breadcrumbs__link">High Performance Websocket broker</span></li></ul></nav><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type="button" class="clean-btn tocCollapsibleButton_TO0P">On this page</button></div><div class="theme-doc-markdown markdown"><header><h1>High Performance Websocket broker</h1></header>
+<p><strong>High-performance WebSocket service for streaming events to end users in a Centralized Exchange (CEX)</strong> system, robust, scalable, and low-latency architecture.</p>
+<!-- -->
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="1core-requirements"><strong>1.Core Requirements</strong><a href="#1core-requirements" class="hash-link" aria-label="Direct link to 1core-requirements" title="Direct link to 1core-requirements" translate="no">​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="functional-requirements">Functional Requirements<a href="#functional-requirements" class="hash-link" aria-label="Direct link to Functional Requirements" title="Direct link to Functional Requirements" translate="no">​</a></h3>
+<ul>
+<li class="">
+<p>Dynamic Integration with external event streams (e.g., Kafka, NATS, Redis Stream, etc.)</p>
+</li>
+<li class="">
+<p>Routing Logic per event stream (e.g., queue-to-WebSocket channel binding)</p>
+</li>
+<li class="">
+<p>Mapping/Transformation Layer per stream (e.g., raw -&gt; client-specific format, aggregation, filtering)</p>
+</li>
+<li class="">
+<p>Fault tolerance: if a server fails, clients can reconnect to another available server in the cluster, ensuring uninterrupted service.</p>
+</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="non-functional-requirements">Non-Functional Requirements<a href="#non-functional-requirements" class="hash-link" aria-label="Direct link to Non-Functional Requirements" title="Direct link to Non-Functional Requirements" translate="no">​</a></h3>
+<ul>
+<li class="">
+<p>Massive Concurrency Support: 100K+ concurrent WebSocket connections</p>
+</li>
+<li class="">
+<p>Low Latency: &lt; 100ms end-to-end event delivery</p>
+</li>
+<li class="">
+<p>Horizontal scalability</p>
+</li>
+<li class="">
+<p>Multi-region support (optional)</p>
+</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="incoming-event-stream-types">Incoming Event Stream Types<a href="#incoming-event-stream-types" class="hash-link" aria-label="Direct link to Incoming Event Stream Types" title="Direct link to Incoming Event Stream Types" translate="no">​</a></h3>
+<ul>
+<li class="">
+<p>Real-time trade events (trade stream)</p>
+</li>
+<li class="">
+<p>Order book updates (depth stream)</p>
+</li>
+<li class="">
+<p>Price ticker updates (ticker)</p>
+</li>
+<li class="">
+<p>User-specific streams (authenticated via token)</p>
+</li>
+</ul>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="2technology-stack"><strong>2.Technology Stack</strong><a href="#2technology-stack" class="hash-link" aria-label="Direct link to 2technology-stack" title="Direct link to 2technology-stack" translate="no">​</a></h2>
+<table><thead><tr><th>Layer</th><th>Tech Choice</th></tr></thead><tbody><tr><td>Language</td><td><strong>Rust</strong></td></tr><tr><td>WebSocket Server</td><td><a href="https://tokio.rs" target="_blank" rel="noopener noreferrer" class="">tokio</a>, <a href="https://libp2p.io" target="_blank" rel="noopener noreferrer" class="">rust-libp2p</a>, <a href="https://docs.rs/axum/" target="_blank" rel="noopener noreferrer" class="">axum</a></td></tr><tr><td>Broker/Queue</td><td><strong>NATS</strong>, <strong>Kafka</strong>, or <strong>Redis Streams</strong></td></tr><tr><td>Authentication</td><td>JWT / OAuth2 (Token-based over initial handshake) / API-KEY</td></tr><tr><td>Orchestration</td><td>Kubernetes (with auto-scaling)</td></tr><tr><td>Observability</td><td>Prometheus + Grafana + Loki/ELK</td></tr></tbody></table>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="3implementation-strategy"><strong>3. Implementation Strategy</strong><a href="#3implementation-strategy" class="hash-link" aria-label="Direct link to 3implementation-strategy" title="Direct link to 3implementation-strategy" translate="no">​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="a-websocket-gateway-ws-gateway"><strong>A. WebSocket Gateway (WS Gateway)</strong><a href="#a-websocket-gateway-ws-gateway" class="hash-link" aria-label="Direct link to a-websocket-gateway-ws-gateway" title="Direct link to a-websocket-gateway-ws-gateway" translate="no">​</a></h3>
+<ul>
+<li class="">
+<p>Written in <strong>Go</strong> or <strong>uWebSockets.js</strong> for high concurrency.</p>
+</li>
+<li class="">
+<p>Handle subscribe/unsubscribe messages.</p>
+</li>
+<li class="">
+<p>Authenticate with JWT.</p>
+</li>
+<li class="">
+<p>Maintain channel to client list mapping.</p>
+</li>
+<li class="">
+<p>Push data from broker to clients using in-memory pub/sub.</p>
+</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="b-event-broker"><strong>B. Event Broker</strong><a href="#b-event-broker" class="hash-link" aria-label="Direct link to b-event-broker" title="Direct link to b-event-broker" translate="no">​</a></h3>
+<ul>
+<li class="">
+<p>Matching engine publishes events to Kafka/NATS per topic: trades.btc_usdt, depth.eth_usdt, ticker.global.</p>
+</li>
+<li class="">
+<p>Use partitions (in Kafka) or topics (in NATS) for high fanout performance.</p>
+</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="c-data-channel-format"><strong>C. Data Channel Format</strong><a href="#c-data-channel-format" class="hash-link" aria-label="Direct link to c-data-channel-format" title="Direct link to c-data-channel-format" translate="no">​</a></h3>
+<p><code>{ &quot;stream&quot;: &quot;depth.btc_usdt&quot;, &quot;data&quot;: { &quot;asks&quot;: [[&quot;36200.5&quot;, &quot;1.2&quot;]], &quot;bids&quot;: [[&quot;36190.1&quot;, &quot;1.1&quot;]], &quot;timestamp&quot;: 1724548345123 } }</code></p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="4scalability--resilience"><strong>4. Scalability &amp; Resilience</strong><a href="#4scalability--resilience" class="hash-link" aria-label="Direct link to 4scalability--resilience" title="Direct link to 4scalability--resilience" translate="no">​</a></h2>
+<table><thead><tr><th>Concern</th><th>Solution</th></tr></thead><tbody><tr><td>Scaling WS</td><td>Stateless WS servers with sticky sessions or centralized pub/sub</td></tr><tr><td>Resilience</td><td>Retry on publish failure, circuit breakers</td></tr><tr><td>Backpressure</td><td>Drop slow clients, use bounded queues</td></tr><tr><td>Horizontal Scale</td><td>Deploy WS Gateway with Kubernetes HPA + custom autoscaler on CPU &amp; connection count</td></tr></tbody></table>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="5security"><strong>5. Security</strong><a href="#5security" class="hash-link" aria-label="Direct link to 5security" title="Direct link to 5security" translate="no">​</a></h2>
+<ul>
+<li class="">
+<p>WebSocket authentication during handshake:</p>
+<ul>
+<li class="">
+<p>Clients provide JWT.</p>
+</li>
+<li class="">
+<p>JWT is validated by Auth service.</p>
+</li>
+</ul>
+</li>
+<li class="">
+<p>Message signing for sensitive topics (like orders).</p>
+</li>
+<li class="">
+<p>WAF or Layer-7 firewall (AWS WAF, Cloudflare, etc).</p>
+</li>
+</ul>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="6observability"><strong>6. Observability</strong><a href="#6observability" class="hash-link" aria-label="Direct link to 6observability" title="Direct link to 6observability" translate="no">​</a></h2>
+<p>Track:</p>
+<ul>
+<li class="">
+<p>Number of active connections</p>
+</li>
+<li class="">
+<p>Events per second</p>
+</li>
+<li class="">
+<p>Latency (matching engine → user)</p>
+</li>
+<li class="">
+<p>Dropped events, client disconnects</p>
+</li>
+</ul>
+<p>Use:</p>
+<ul>
+<li class="">
+<p>Prometheus metrics in Go</p>
+</li>
+<li class="">
+<p>Logs to Loki or ELK stack</p>
+</li>
+<li class="">
+<p>Grafana dashboards</p>
+</li>
+</ul>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="deliverables-in-mvp"><strong>Deliverables in MVP</strong><a href="#deliverables-in-mvp" class="hash-link" aria-label="Direct link to deliverables-in-mvp" title="Direct link to deliverables-in-mvp" translate="no">​</a></h2>
+<ul>
+<li class="">
+<p>WebSocket Gateway with topic subscriptions</p>
+</li>
+<li class="">
+<p>Kafka/NATS integration</p>
+</li>
+<li class="">
+<p>Sample clients (web + CLI)</p>
+</li>
+<li class="">
+<p>Dashboard for live metrics</p>
+</li>
+<li class="">
+<p>Test with 10K-100K concurrent simulated clients using Artillery or k6</p>
+</li>
+</ul>
+<ol start="7">
+<li class="">Acceptance Usecases</li>
+</ol>
+<hr>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="1use-case-websocket-handshake-with-authorization"><strong>1. Use Case: WebSocket Handshake with Authorization</strong><a href="#1use-case-websocket-handshake-with-authorization" class="hash-link" aria-label="Direct link to 1use-case-websocket-handshake-with-authorization" title="Direct link to 1use-case-websocket-handshake-with-authorization" translate="no">​</a></h3>
+<p>Actors: Web Client / Mobile Client, WebSocket Gateway, Auth Service</p>
+<p>Description: Clients initiate WebSocket connection with a JWT or API key.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="flow"><strong>Flow:</strong><a href="#flow" class="hash-link" aria-label="Direct link to flow" title="Direct link to flow" translate="no">​</a></h3>
+<ol>
+<li class="">
+<p>Client connects to /ws endpoint.</p>
+</li>
+<li class="">
+<p>During the upgrade request, the client includes a JWT in headers or query param.</p>
+</li>
+<li class="">
+<p>WebSocket Gateway validates the JWT with the Auth Service.</p>
+</li>
+<li class="">
+<p>On success:</p>
+<ul>
+<li class="">
+<p>User info (userId, roles, allowed pairs) is extracted and cached.</p>
+</li>
+<li class="">
+<p>Connection is accepted.</p>
+</li>
+</ul>
+</li>
+<li class="">
+<p>On failure: return HTTP 401 and reject upgrade.</p>
+</li>
+</ol>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="events"><strong>Events:</strong><a href="#events" class="hash-link" aria-label="Direct link to events" title="Direct link to events" translate="no">​</a></h3>
+<ul>
+<li class="">
+<p>onConnectionOpen()</p>
+</li>
+<li class="">
+<p>onAuthValidate(token)</p>
+</li>
+<li class="">
+<p>onConnectionAccepted() / onConnectionRejected()</p>
+</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="2use-case-subscribe-to-allowed-topics">2. Use Case: Subscribe to Allowed Topics<a href="#2use-case-subscribe-to-allowed-topics" class="hash-link" aria-label="Direct link to 2. Use Case: Subscribe to Allowed Topics" title="Direct link to 2. Use Case: Subscribe to Allowed Topics" translate="no">​</a></h3>
+<p>Actors: Authenticated Client, WebSocket Gateway</p>
+<p>Description: After successful handshake, client sends a subscription request.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="example-topics"><strong>Example Topics:</strong><a href="#example-topics" class="hash-link" aria-label="Direct link to example-topics" title="Direct link to example-topics" translate="no">​</a></h3>
+<ul>
+<li class="">
+<p>ticker.btc_usdt</p>
+</li>
+<li class="">
+<p>depth.btc_usdt</p>
+</li>
+<li class="">
+<p>orders.user123 (private)</p>
+</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="flow-1"><strong>Flow:</strong><a href="#flow-1" class="hash-link" aria-label="Direct link to flow-1" title="Direct link to flow-1" translate="no">​</a></h3>
+<ol>
+<li class="">Client sends:</li>
+</ol>
+<p><code>{ &quot;action&quot;: &quot;subscribe&quot;, &quot;streams&quot;: [&quot;ticker.btc_usdt&quot;, &quot;orders.user123&quot;] }</code></p>
+<ol start="2">
+<li class="">
+<p>WebSocket Gateway:</p>
+</li>
+<li class="">
+<p>Validates topic access (e.g., user can only subscribe to orders.user123)</p>
+</li>
+<li class="">
+<p>Registers client to internal channel (e.g., Redis pub/sub or in-memory topic map)</p>
+</li>
+</ol>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="events-1"><strong>Events:</strong><a href="#events-1" class="hash-link" aria-label="Direct link to events-1" title="Direct link to events-1" translate="no">​</a></h3>
+<ul>
+<li class="">
+<p>onSubscribeRequest(streams)</p>
+</li>
+<li class="">
+<p>onTopicPermissionCheck()</p>
+</li>
+<li class="">
+<p>onSubscriptionConfirmed()</p>
+</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="3use-case-receive-streamed-data-from-kafka-and-push-to-clients"><strong>3. Use Case: Receive Streamed Data from Kafka and Push to Clients</strong><a href="#3use-case-receive-streamed-data-from-kafka-and-push-to-clients" class="hash-link" aria-label="Direct link to 3use-case-receive-streamed-data-from-kafka-and-push-to-clients" title="Direct link to 3use-case-receive-streamed-data-from-kafka-and-push-to-clients" translate="no">​</a></h3>
+<p>Actors: Kafka, WebSocket Gateway</p>
+<p>Description: Internal services (e.g., Matching Engine) publish messages to Kafka. The Gateway consumes and routes them to subscribed clients.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="flow-2"><strong>Flow:</strong><a href="#flow-2" class="hash-link" aria-label="Direct link to flow-2" title="Direct link to flow-2" translate="no">​</a></h3>
+<ol>
+<li class="">Matching Engine publishes message:</li>
+</ol>
+<p><code>{ &quot;stream&quot;: &quot;ticker.btc_usdt&quot;, &quot;data&quot;: { &quot;price&quot;: &quot;36200.5&quot;, &quot;volume&quot;: &quot;1.25&quot;, &quot;timestamp&quot;: 1724548381123 } }</code></p>
+<ol start="2">
+<li class="">
+<p>Kafka consumer inside WebSocket Gateway receives the message.</p>
+</li>
+<li class="">
+<p>Gateway looks up clients subscribed to ticker.btc_usdt.</p>
+</li>
+<li class="">
+<p>Message is broadcasted to all connected WebSocket clients of that topic.</p>
+</li>
+</ol>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="events-2"><strong>Events:</strong><a href="#events-2" class="hash-link" aria-label="Direct link to events-2" title="Direct link to events-2" translate="no">​</a></h3>
+<ul>
+<li class="">
+<p>onKafkaMessage(topic, message)</p>
+</li>
+<li class="">
+<p>onMessageDispatch(topic → clients[])</p>
+</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="4use-case-unsubscribe-from-a-topic"><strong>4. Use Case: Unsubscribe from a Topic</strong><a href="#4use-case-unsubscribe-from-a-topic" class="hash-link" aria-label="Direct link to 4use-case-unsubscribe-from-a-topic" title="Direct link to 4use-case-unsubscribe-from-a-topic" translate="no">​</a></h3>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="actors-authenticated-client"><strong>Actors: Authenticated Client</strong><a href="#actors-authenticated-client" class="hash-link" aria-label="Direct link to actors-authenticated-client" title="Direct link to actors-authenticated-client" translate="no">​</a></h3>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="description-clients-can-unsubscribe-from-specific-topics-to-save-bandwidth"><strong>Description: Clients can unsubscribe from specific topics to save bandwidth.</strong><a href="#description-clients-can-unsubscribe-from-specific-topics-to-save-bandwidth" class="hash-link" aria-label="Direct link to description-clients-can-unsubscribe-from-specific-topics-to-save-bandwidth" title="Direct link to description-clients-can-unsubscribe-from-specific-topics-to-save-bandwidth" translate="no">​</a></h3>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="flow-3"><strong>Flow:</strong><a href="#flow-3" class="hash-link" aria-label="Direct link to flow-3" title="Direct link to flow-3" translate="no">​</a></h3>
+<ol>
+<li class="">Client sends:</li>
+</ol>
+<p><code>{ &quot;action&quot;: &quot;unsubscribe&quot;, &quot;streams&quot;: [&quot;ticker.btc_usdt&quot;] }</code></p>
+<ol start="2">
+<li class="">Gateway removes client from internal routing list for that topic.</li>
+</ol>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="5use-case-backpressure--dropping-slow-clients"><strong>5. Use Case: Backpressure &amp; Dropping Slow Clients</strong><a href="#5use-case-backpressure--dropping-slow-clients" class="hash-link" aria-label="Direct link to 5use-case-backpressure--dropping-slow-clients" title="Direct link to 5use-case-backpressure--dropping-slow-clients" translate="no">​</a></h3>
+<p>Actors: WebSocket Gateway</p>
+<p>Description: If client cannot consume messages fast enough, drop it to avoid memory leaks.</p>
+<p>Flow:</p>
+<ol>
+<li class="">
+<p>Gateway maintains a message queue per client (e.g., ring buffer or channel).</p>
+</li>
+<li class="">
+<p>If queue exceeds threshold or client write times out:</p>
+<ul>
+<li class="">
+<p>Send disconnect with reason</p>
+</li>
+<li class="">
+<p>Close WebSocket</p>
+</li>
+</ul>
+</li>
+</ol>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="6use-case-private-stream-for-authenticated-user"><strong>6. Use Case: Private Stream for Authenticated User</strong><a href="#6use-case-private-stream-for-authenticated-user" class="hash-link" aria-label="Direct link to 6use-case-private-stream-for-authenticated-user" title="Direct link to 6use-case-private-stream-for-authenticated-user" translate="no">​</a></h3>
+<p>Actors: Authenticated Client, Order Service</p>
+<p>Description: Users receive their order updates through orders.user123 stream.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="flow-4"><strong>Flow:</strong><a href="#flow-4" class="hash-link" aria-label="Direct link to flow-4" title="Direct link to flow-4" translate="no">​</a></h3>
+<ol>
+<li class="">
+<p>Order Service publishes private order update to Kafka topic: orders.user123</p>
+</li>
+<li class="">
+<p>WebSocket Gateway reads this Kafka topic</p>
+</li>
+<li class="">
+<p>Routes message only to the client authenticated as user123</p>
+</li>
+</ol>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="7use-case-reconnect-with-resume-support"><strong>7. Use Case: Reconnect with Resume Support</strong><a href="#7use-case-reconnect-with-resume-support" class="hash-link" aria-label="Direct link to 7use-case-reconnect-with-resume-support" title="Direct link to 7use-case-reconnect-with-resume-support" translate="no">​</a></h3>
+<p>Actors: Authenticated Client, WebSocket Gateway</p>
+<p>Description: If connection is lost, allow client to reconnect and resume from last known sequence.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="flow-5"><strong>Flow:</strong><a href="#flow-5" class="hash-link" aria-label="Direct link to flow-5" title="Direct link to flow-5" translate="no">​</a></h3>
+<ol>
+<li class="">Client reconnects and sends:</li>
+</ol>
+<p><code>{ &quot;action&quot;: &quot;resume&quot;, &quot;streams&quot;: [&quot;depth.btc_usdt&quot;], &quot;lastSequence&quot;: 21253412 }</code></p>
+<ol start="2">
+<li class="">
+<p>Gateway queries cache or buffer (e.g., Redis or local memory) for missed messages.</p>
+</li>
+<li class="">
+<p>Sends missed updates, then resumes real-time stream.</p>
+</li>
+</ol>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="summary-table"><strong>Summary Table</strong><a href="#summary-table" class="hash-link" aria-label="Direct link to summary-table" title="Direct link to summary-table" translate="no">​</a></h2>
+<table><thead><tr><th>Use Case</th><th>Description</th><th>Key Events</th></tr></thead><tbody><tr><td>Handshake + Auth</td><td>JWT-based connection init</td><td>onAuthValidate</td></tr><tr><td>Subscribe Topics</td><td>Subscribe to market/private topics</td><td>onSubscribeRequest</td></tr><tr><td>Kafka to Clients</td><td>Consume Kafka &amp; push to clients</td><td>onKafkaMessage</td></tr><tr><td>Unsubscribe</td><td>Stop receiving a stream</td><td>onUnsubscribeRequest</td></tr><tr><td>Backpressure</td><td>Drop or pause slow clients</td><td>onClientOverload</td></tr><tr><td>Private Streams</td><td>Per-user updates</td><td>onUserStreamPush</td></tr><tr><td>Resume Support</td><td>Reconnect and resume</td><td>onResumeStream</td></tr></tbody></table></div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="row margin-top--sm theme-doc-footer-edit-meta-row"><div class="col noPrint_WFHX"><a href="https://github.com/TikTzuki/tiktzuki.github.io/tree/master/docs/system-design/high-performance-websocket-broker.md" target="_blank" rel="noopener noreferrer" class="theme-edit-this-page"><svg fill="currentColor" height="20" width="20" viewBox="0 0 40 40" class="iconEdit_Z9Sw" aria-hidden="true"><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"></path></g></svg>Edit this page</a></div><div class="col lastUpdated_JAkA"></div></div></footer></article><nav class="docusaurus-mt-lg pagination-nav" aria-label="Docs pages"><a class="pagination-nav__link pagination-nav__link--prev" href="/docs/rust-libp2p/turning"><div class="pagination-nav__sublabel">Previous</div><div class="pagination-nav__label">turning</div></a><a class="pagination-nav__link pagination-nav__link--next" href="/docs/system-design/mpc/MPC-Rust"><div class="pagination-nav__sublabel">Next</div><div class="pagination-nav__label">MPC-based Crypto-Custody Design (Rust) — SSD</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#1core-requirements" class="table-of-contents__link toc-highlight"><strong>1.Core Requirements</strong></a><ul><li><a href="#functional-requirements" class="table-of-contents__link toc-highlight">Functional Requirements</a></li><li><a href="#non-functional-requirements" class="table-of-contents__link toc-highlight">Non-Functional Requirements</a></li><li><a href="#incoming-event-stream-types" class="table-of-contents__link toc-highlight">Incoming Event Stream Types</a></li></ul></li><li><a href="#2technology-stack" class="table-of-contents__link toc-highlight"><strong>2.Technology Stack</strong></a></li><li><a href="#3implementation-strategy" class="table-of-contents__link toc-highlight"><strong>3. Implementation Strategy</strong></a><ul><li><a href="#a-websocket-gateway-ws-gateway" class="table-of-contents__link toc-highlight"><strong>A. WebSocket Gateway (WS Gateway)</strong></a></li><li><a href="#b-event-broker" class="table-of-contents__link toc-highlight"><strong>B. Event Broker</strong></a></li><li><a href="#c-data-channel-format" class="table-of-contents__link toc-highlight"><strong>C. Data Channel Format</strong></a></li></ul></li><li><a href="#4scalability--resilience" class="table-of-contents__link toc-highlight"><strong>4. Scalability &amp; Resilience</strong></a></li><li><a href="#5security" class="table-of-contents__link toc-highlight"><strong>5. Security</strong></a></li><li><a href="#6observability" class="table-of-contents__link toc-highlight"><strong>6. Observability</strong></a></li><li><a href="#deliverables-in-mvp" class="table-of-contents__link toc-highlight"><strong>Deliverables in MVP</strong></a><ul><li><a href="#1use-case-websocket-handshake-with-authorization" class="table-of-contents__link toc-highlight"><strong>1. Use Case: WebSocket Handshake with Authorization</strong></a></li><li><a href="#flow" class="table-of-contents__link toc-highlight"><strong>Flow:</strong></a></li><li><a href="#events" class="table-of-contents__link toc-highlight"><strong>Events:</strong></a></li><li><a href="#2use-case-subscribe-to-allowed-topics" class="table-of-contents__link toc-highlight">2. Use Case: Subscribe to Allowed Topics</a></li><li><a href="#example-topics" class="table-of-contents__link toc-highlight"><strong>Example Topics:</strong></a></li><li><a href="#flow-1" class="table-of-contents__link toc-highlight"><strong>Flow:</strong></a></li><li><a href="#events-1" class="table-of-contents__link toc-highlight"><strong>Events:</strong></a></li><li><a href="#3use-case-receive-streamed-data-from-kafka-and-push-to-clients" class="table-of-contents__link toc-highlight"><strong>3. Use Case: Receive Streamed Data from Kafka and Push to Clients</strong></a></li><li><a href="#flow-2" class="table-of-contents__link toc-highlight"><strong>Flow:</strong></a></li><li><a href="#events-2" class="table-of-contents__link toc-highlight"><strong>Events:</strong></a></li><li><a href="#4use-case-unsubscribe-from-a-topic" class="table-of-contents__link toc-highlight"><strong>4. Use Case: Unsubscribe from a Topic</strong></a></li><li><a href="#actors-authenticated-client" class="table-of-contents__link toc-highlight"><strong>Actors: Authenticated Client</strong></a></li><li><a href="#description-clients-can-unsubscribe-from-specific-topics-to-save-bandwidth" class="table-of-contents__link toc-highlight"><strong>Description: Clients can unsubscribe from specific topics to save bandwidth.</strong></a></li><li><a href="#flow-3" class="table-of-contents__link toc-highlight"><strong>Flow:</strong></a></li><li><a href="#5use-case-backpressure--dropping-slow-clients" class="table-of-contents__link toc-highlight"><strong>5. Use Case: Backpressure &amp; Dropping Slow Clients</strong></a></li><li><a href="#6use-case-private-stream-for-authenticated-user" class="table-of-contents__link toc-highlight"><strong>6. Use Case: Private Stream for Authenticated User</strong></a></li><li><a href="#flow-4" class="table-of-contents__link toc-highlight"><strong>Flow:</strong></a></li><li><a href="#7use-case-reconnect-with-resume-support" class="table-of-contents__link toc-highlight"><strong>7. Use Case: Reconnect with Resume Support</strong></a></li><li><a href="#flow-5" class="table-of-contents__link toc-highlight"><strong>Flow:</strong></a></li></ul></li><li><a href="#summary-table" class="table-of-contents__link toc-highlight"><strong>Summary Table</strong></a></li></ul></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="theme-layout-footer-column col footer__col"><div class="footer__title">Docs</div><ul class="footer__items clean-list"><li class="footer__item"><a class="footer__link-item" href="/docs/intro">Docs</a></li></ul></div><div class="theme-layout-footer-column col footer__col"><div class="footer__title">Community</div><ul class="footer__items clean-list"><li class="footer__item"><a href="https://stackoverflow.com/questions/tagged/docusaurus" target="_blank" rel="noopener noreferrer" class="footer__link-item">Stack Overflow<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li><li class="footer__item"><a href="https://discordapp.com/invite/docusaurus" target="_blank" rel="noopener noreferrer" class="footer__link-item">Discord<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li></ul></div><div class="theme-layout-footer-column col footer__col"><div class="footer__title">More</div><ul class="footer__items clean-list"><li class="footer__item"><a class="footer__link-item" href="/blog">Blog</a></li><li class="footer__item"><a href="https://github.com/TikTzuki" target="_blank" rel="noopener noreferrer" class="footer__link-item">GitHub<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li></ul></div></div><div class="footer__bottom text--center"><div class="footer__copyright">Copyright © 2025 TikTuzki, Inc. Built with Docusaurus.</div></div></div></footer></div>
+</body>
+</html>

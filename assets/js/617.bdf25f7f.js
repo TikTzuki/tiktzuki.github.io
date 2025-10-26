@@ -1,0 +1,1 @@
+"use strict";(globalThis.webpackChunktik_space=globalThis.webpackChunktik_space||[]).push([[617],{617:(e,a,s)=>{s.d(a,{createPieServices:()=>c.f});var c=s(9150);s(7960)}}]);

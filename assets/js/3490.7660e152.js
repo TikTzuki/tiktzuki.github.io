@@ -1,0 +1,1 @@
+"use strict";(globalThis.webpackChunktik_space=globalThis.webpackChunktik_space||[]).push([[3490],{3490:(e,a,s)=>{s.d(a,{createInfoServices:()=>c.v});var c=s(1885);s(7960)}}]);

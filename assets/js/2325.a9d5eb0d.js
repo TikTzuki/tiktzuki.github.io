@@ -1,0 +1,1 @@
+"use strict";(globalThis.webpackChunktik_space=globalThis.webpackChunktik_space||[]).push([[2325],{2325:(e,a,c)=>{c.d(a,{createPacketServices:()=>s.$});var s=c(8620);c(7960)}}]);
