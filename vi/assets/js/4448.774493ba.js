@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunktik_space=self.webpackChunktik_space||[]).push([["4448"],{60531(e,c,s){s.d(c,{createArchitectureServices:()=>t.S});var t=s(39543);s(52491)}}]);

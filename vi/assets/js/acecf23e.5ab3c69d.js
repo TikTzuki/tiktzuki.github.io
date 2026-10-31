@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunktik_space=self.webpackChunktik_space||[]).push([["3220"],{1912(s){s.exports=JSON.parse('{"blogBasePath":"/vi/blog","blogTitle":"Blog","authorsListPath":"/vi/blog/authors"}')}}]);

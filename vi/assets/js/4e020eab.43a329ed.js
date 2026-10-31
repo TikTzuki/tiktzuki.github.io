@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunktik_space=self.webpackChunktik_space||[]).push([["1317"],{76410(e){e.exports=JSON.parse('{"metadata":{"permalink":"/vi/blog","page":1,"postsPerPage":10,"totalPages":1,"totalCount":2,"blogDescription":"Blog","blogTitle":"Blog"}}')}}]);
